@@ -32,4 +32,4 @@ chsh -s `which zsh`
 chsh -s `which zsh` vagrant
 
 # Required by vagrant
-sed 's/^\(Defaults[[:space:]]\+requiretty\)/#&\t#required by vagrant/' /etc/sudoers
+sed -i.bak 's/^\(Defaults[[:space:]]\+requiretty\)/#&\t#required by vagrant/' /etc/sudoers
