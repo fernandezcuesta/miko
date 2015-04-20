@@ -20,8 +20,9 @@ useradd vagrant -G wheel
 
 # Put dotfiles in place
 mv dotfiles/nanorc/* /usr/share/nano/
-cp -R dotfiles/.vim /root/.vim
-mv /root/.vim /home/vagrant
+git clone https://github.com/gmarik/Vundle.vim.git dotfiles/.vim/bundle/Vundle.vim
+cp -R dotfiles/.vim /root
+cp -R dotfiles/.vim /home/vagrant
 mv dotfiles/*.tmux /usr/local/bin
 for file in dotfiles/.*; do [[ -f $file ]] && cp $file . && cp $file /home/vagrant; done
 chown -R vagrant:vagrant /home/vagrant
@@ -31,5 +32,7 @@ rm -Rf dotfiles
 chsh -s `which zsh`
 chsh -s `which zsh` vagrant
 
-# Required by vagrant
-sed -i.bak 's/^\(Defaults[[:space:]]\+requiretty\)/#&\t#required by vagrant/' /etc/sudoers
+# Required by vagrant (http://docs.vagrantup.com/v2/boxes/base.html)
+sed -i 's/^\(Defaults[[:space:]]\+requiretty\)/#&\t# required by vagrant/' /etc/sudoers
+sed -i 's/!visiblepw/visiblepw\t# required by vagrant/' /etc/sudoers
+sed -i '/#\+\s*Same thing without a password/a vagrant ALL=(ALL) NOPASSWD: ALL' /etc/sudoers

@@ -19,7 +19,7 @@
       "ssh_host_port_min": 2222,
       "ssh_host_port_max": 2229,
       "ssh_username": "root",
-      "ssh_password": "sysadmin",
+      "ssh_password": "vagrant",
       "ssh_port": 22,
       "ssh_wait_timeout": "90m",
       "vm_name": "centos7",
@@ -38,7 +38,7 @@
     {
       "type": "shell",
       "script": "script.sh",
-      "execute_command": "echo 'sysadmin' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'"
+      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'"
     }
   
   ],
