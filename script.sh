@@ -10,6 +10,7 @@ git clone https://github.com/fernandezcuesta/dotfiles.git
 # Install missing packages
 yum install -y htop vim nano tmux setroubleshoot-server bash-completion python-psutil zsh
 yum groupinstall -y "Basic Web Server"
+yum install -y xorg-x11-{server-utils,xauth,xinit,fonts-Type1}
 
 # Enable serial line output
 echo "GRUB_TERMINAL=\"console serial\"" >> /etc/default/grub

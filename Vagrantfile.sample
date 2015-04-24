@@ -1,0 +1,27 @@
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos7packer"
+  config.vm.box_url = "centos7.box"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.synced_folder "sync/", "/sync", type: "nfs"
+  
+  # Prefer libvirt before VirtualBox
+  config.vm.provider "libvirt"
+  config.vm.provider "virtualbox"
+
+  # Fix for arch host
+  config.trigger.before :up, :stdout => true do
+    info "Starting rpcbind service on host"
+    run "sudo systemctl start rpcbind.service"
+  end
+
+  config.trigger.after :halt, :stdout => true do
+    info "Stopping rpcbind service on host"
+    run "sudo systemctl stop rpcbind.service"
+  end
+
+  # Trigger iptables rules on host for NFS
+  config.trigger.before :up, :stdout => true do
+    info "Opening iptables rules for NFS on host"
+    run "./nfs-iptables.sh"
+  end
+end
