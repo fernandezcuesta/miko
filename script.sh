@@ -5,7 +5,9 @@ yum install -y epel-release
 # Moved this to early stages to avoid nw outage due to reconfigurations
 yum install -y git
 git clone https://github.com/robbyrussell/oh-my-zsh.git /usr/share/oh-my-zsh
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /usr/share/oh-my/zsh/plugins/zsh-syntax-highlight
 git clone https://github.com/fernandezcuesta/dotfiles.git
+git clone https://github.com/gmarik/Vundle.vim.git dotfiles/.vim/bundle/Vundle.vim
 
 # Install missing packages
 yum install -y htop vim nano tmux setroubleshoot-server bash-completion python-psutil zsh
@@ -22,9 +24,8 @@ echo -e 'vagrant\nvagrant' | passwd vagrant
 
 # Put dotfiles in place
 mv dotfiles/nanorc/* /usr/share/nano/
-git clone https://github.com/gmarik/Vundle.vim.git dotfiles/.vim/bundle/Vundle.vim
 cp -R dotfiles/.vim /root
-cp -R dotfiles/.vim /home/vagrant
+mv dotfiles/.vim /home/vagrant
 mv dotfiles/*.tmux /usr/local/bin
 for file in dotfiles/.*; do [[ -f $file ]] && cp $file . && cp $file /home/vagrant; done
 chown -R vagrant:vagrant /home/vagrant
